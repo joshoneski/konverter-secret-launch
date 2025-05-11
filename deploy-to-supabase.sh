@@ -42,3 +42,4 @@ echo "Set up a CNAME record:"
 echo "CNAME landing.<yourdomain> → ygtmdrsrlyteuuvzwqjv.supabase.co"
 echo ""
 echo "Note: This will be proxied through Cloudflare for free SSL; no further action needed."
+
