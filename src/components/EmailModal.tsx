@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface EmailModalProps {
   isOpen: boolean;
@@ -17,20 +18,44 @@ export default function EmailModal({ isOpen, onClose, userType }: EmailModalProp
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // Store the email and user type in Supabase storage
+      // This is using the public bucket to store the emails temporarily
+      // In a production app, you would use a proper database table
+      const { error } = await supabase.storage
+        .from('website')
+        .upload(`contacts/${userType}-${Date.now()}.json`, JSON.stringify({
+          email,
+          userType,
+          timestamp: new Date().toISOString()
+        }));
+      
+      if (error) {
+        console.error("Error storing contact:", error);
+        throw new Error("Failed to submit. Please try again.");
+      }
+      
       toast({
         title: "Thank you for joining!",
         description: "We'll be in touch soon.",
       });
+      
       onClose();
       setEmail("");
-    }, 1000);
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({
+        title: "Submission failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   
   const getTitle = () => {
