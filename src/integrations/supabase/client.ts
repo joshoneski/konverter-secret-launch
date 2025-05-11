@@ -23,9 +23,7 @@ export const supabase = createClient<Database>(
       detectSessionInUrl: true,
       flowType: 'pkce',
       // Configure redirects for authentication flows
-      url: {
-        redirectTo: `${SITE_URL}/auth/callback`,
-      },
+      redirectTo: `${SITE_URL}/auth/callback`,
     },
   }
 );
