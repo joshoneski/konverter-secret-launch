@@ -9,8 +9,10 @@ export default function VideoHero() {
   const playerRef = useRef<YT.Player | null>(null);
   const { ref: leftRef, getExitStyle: getLeftExitStyle, isScrolledPast } = useScrollAnimation();
   const { ref: rightRef, getExitStyle: getRightExitStyle } = useScrollAnimation();
+  const heroRef = useRef<HTMLDivElement>(null);
   
-  const scrollThreshold = 150; // Adjust this value to control when text exits
+  // Increased threshold for better text clearing before video focus
+  const scrollThreshold = 250; 
   
   const toggleVideo = () => {
     if (playerRef.current) {
@@ -21,6 +23,25 @@ export default function VideoHero() {
       }
       
       setVideoPlaying(!videoPlaying);
+    }
+  };
+
+  // Manage video position based on scroll
+  const getVideoStyle = () => {
+    if (!isScrolledPast(scrollThreshold)) {
+      // When header is visible, video is in background position
+      return {
+        transform: 'scale(1.0)',
+        filter: 'brightness(0.5)',
+        transition: 'all 0.6s ease-out'
+      };
+    } else {
+      // When scrolled past threshold, video moves to focus position
+      return {
+        transform: 'scale(1.1)',
+        filter: 'brightness(1)',
+        transition: 'all 0.6s ease-out'
+      };
     }
   };
 
@@ -74,9 +95,12 @@ export default function VideoHero() {
   const showPlayButton = !isScrolledPast(scrollThreshold);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      {/* Video Background */}
-      <div className="absolute inset-0">
+    <section ref={heroRef} className="relative h-screen w-full overflow-hidden">
+      {/* Video Background - Now with dynamic positioning */}
+      <div 
+        className="absolute inset-0 transition-all duration-500 ease-out"
+        style={getVideoStyle()}
+      >
         <iframe
           ref={iframeRef}
           className="min-h-full min-w-full object-cover w-full h-full"
@@ -87,7 +111,7 @@ export default function VideoHero() {
           allowFullScreen
         ></iframe>
         <div 
-          className="absolute inset-0 bg-gradient-to-b transition-opacity duration-500"
+          className="absolute inset-0 transition-opacity duration-500"
           style={{
             opacity: showPlayButton ? 1 : 0,
             background: 'linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7), rgba(0,0,0,0.9))'
@@ -95,13 +119,13 @@ export default function VideoHero() {
         ></div>
       </div>
 
-      {/* Split Hero Content */}
+      {/* Split Hero Content - With improved exit animation */}
       <div className="relative h-full w-full flex flex-col md:flex-row">
         {/* Left Side - Creators */}
         <div 
           ref={leftRef}
           className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 will-change-transform"
-          style={getLeftExitStyle('left', scrollThreshold)}
+          style={getLeftExitStyle('left', scrollThreshold, 2)} // Increased exit speed
         >
           <div className="text-center md:text-right">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white mb-2">
@@ -117,7 +141,7 @@ export default function VideoHero() {
         <div 
           ref={rightRef}
           className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 will-change-transform"
-          style={getRightExitStyle('right', scrollThreshold)}
+          style={getRightExitStyle('right', scrollThreshold, 2)} // Increased exit speed
         >
           <div className="text-center md:text-left">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white mb-2">
