@@ -3,7 +3,6 @@
 set -e
 
 # Set the service key from the one provided
-export SUPABASE_SERVICE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlndG1kcnNybHl0ZXV1dnp3cWp2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njk5OTIwMCwiZXhwIjoyMDYyNTc1MjAwfQ.YeFJT-MdGQvzB7OA4KET9JJN5wx9JDEuP45H3iS0iFg"
 
 echo "Logging into Supabase..."
 echo $SUPABASE_SERVICE_KEY | supabase login
