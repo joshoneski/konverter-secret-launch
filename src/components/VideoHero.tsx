@@ -36,6 +36,9 @@ export default function VideoHero() {
     }
   }, [isScrolledPast, scrollThreshold, videoPlaying]);
 
+  // Check if we should show the play button and apply the overlay
+  const showPlayButton = !isScrolledPast(scrollThreshold);
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Video Background */}
@@ -54,7 +57,13 @@ export default function VideoHero() {
           />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/90"></div>
+        <div 
+          className="absolute inset-0 bg-gradient-to-b transition-opacity duration-500"
+          style={{
+            opacity: showPlayButton ? 1 : 0,
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7), rgba(0,0,0,0.9))'
+          }}
+        ></div>
       </div>
 
       {/* Split Hero Content */}
@@ -91,22 +100,24 @@ export default function VideoHero() {
           </div>
         </div>
 
-        {/* Play Button */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <button
-            onClick={toggleVideo}
-            className={`rounded-full p-4 bg-black/30 border-2 transition-all duration-300 ${
-              videoPlaying 
-                ? "border-white/70 hover:border-white" 
-                : "border-white animate-pulse-soft hover:border-white"
-            }`}
-          >
-            <Play
-              size={24}
-              className={`text-white transition-opacity ${videoPlaying ? "opacity-70" : "opacity-100"}`}
-            />
-          </button>
-        </div>
+        {/* Play Button - Only show when header text is visible */}
+        {showPlayButton && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300">
+            <button
+              onClick={toggleVideo}
+              className={`rounded-full p-4 bg-black/30 border-2 transition-all duration-300 ${
+                videoPlaying 
+                  ? "border-white/70 hover:border-white" 
+                  : "border-white animate-pulse-soft hover:border-white"
+              }`}
+            >
+              <Play
+                size={24}
+                className={`text-white transition-opacity ${videoPlaying ? "opacity-70" : "opacity-100"}`}
+              />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
