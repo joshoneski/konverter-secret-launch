@@ -5,34 +5,61 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export default function VideoHero() {
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const { ref: leftRef, getExitStyle: getLeftExitStyle, isScrolledPast } = useScrollAnimation();
   const { ref: rightRef, getExitStyle: getRightExitStyle } = useScrollAnimation();
   
   const scrollThreshold = 150; // Adjust this value to control when text exits
   
   const toggleVideo = () => {
-    if (videoRef.current) {
+    if (iframeRef.current) {
+      const iframe = iframeRef.current;
+      const player = new YT.Player(iframe);
+      
       if (videoPlaying) {
-        videoRef.current.pause();
+        player.pauseVideo();
       } else {
-        videoRef.current.play();
+        player.playVideo();
       }
+      
       setVideoPlaying(!videoPlaying);
     }
   };
 
   useEffect(() => {
+    // Load YouTube API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    
+    // Initialize player when API is ready
+    window.onYouTubeIframeAPIReady = () => {
+      if (iframeRef.current) {
+        new YT.Player(iframeRef.current, {
+          events: {
+            onStateChange: (event) => {
+              setVideoPlaying(event.data === YT.PlayerState.PLAYING);
+            }
+          }
+        });
+      }
+    };
+    
+    // Cleanup
+    return () => {
+      window.onYouTubeIframeAPIReady = null;
+    };
+  }, []);
+
+  useEffect(() => {
     // Play video automatically when scrolled past threshold
     if (isScrolledPast(scrollThreshold)) {
-      if (videoRef.current && !videoPlaying) {
-        videoRef.current.play();
-        setVideoPlaying(true);
+      if (iframeRef.current && !videoPlaying) {
+        const iframe = iframeRef.current;
+        const player = new YT.Player(iframe);
+        player.playVideo();
       }
-    } else if (videoPlaying && videoRef.current) {
-      // Optionally pause when scrolling back up
-      // videoRef.current.pause();
-      // setVideoPlaying(false);
     }
   }, [isScrolledPast, scrollThreshold, videoPlaying]);
 
@@ -43,20 +70,15 @@ export default function VideoHero() {
     <section className="relative h-screen w-full overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0">
-        <video
-          ref={videoRef}
-          className="min-h-full min-w-full object-cover"
-          autoPlay={false}
-          loop
-          muted
-          playsInline
-        >
-          <source 
-            src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
-            type="video/mp4" 
-          />
-          Your browser does not support the video tag.
-        </video>
+        <iframe
+          ref={iframeRef}
+          className="min-h-full min-w-full object-cover w-full h-full"
+          src="https://www.youtube.com/embed/YVuJIGPX5zY?enablejsapi=1&controls=0&showinfo=0&rel=0&autoplay=0&loop=1&playlist=YVuJIGPX5zY&mute=1"
+          title="YouTube video"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
         <div 
           className="absolute inset-0 bg-gradient-to-b transition-opacity duration-500"
           style={{
