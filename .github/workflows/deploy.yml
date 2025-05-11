@@ -1,0 +1,42 @@
+
+name: Deploy to Supabase Storage
+
+on:
+  push:
+    branches:
+      - main  # Or your default branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Install Supabase CLI
+        run: |
+          curl -fsSL https://github.com/supabase/cli/releases/download/v1.64.8/supabase_1.64.8_linux_amd64.deb -o supabase.deb
+          sudo dpkg -i supabase.deb
+          rm supabase.deb
+
+      - name: Deploy to Supabase Storage
+        env:
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          echo $SUPABASE_SERVICE_KEY | supabase login
+          supabase link --project-ref ygtmdrsrlyteuuvzwqjv
+          supabase storage create bucket website --public || true
+          supabase storage update bucket website --public
+          supabase storage upload website ./dist --recursive

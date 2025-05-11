@@ -1,3 +1,4 @@
+
 # Welcome to your Lovable project
 
 ## Project info
@@ -50,6 +51,13 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## GitHub CI/CD Setup
+
+This project is configured with a GitHub Actions workflow for continuous deployment:
+
+- Pushes to the main branch automatically build and deploy the site to Supabase Storage
+- To enable this workflow, add a repository secret named `SUPABASE_SERVICE_KEY` with your Supabase service key
+
 ## What technologies are used for this project?
 
 This project is built with:
@@ -62,7 +70,10 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/62881d9c-6e86-4dc0-b380-4522a23c7b86) and click on Share -> Publish.
+There are two ways to deploy:
+
+1. Use the GitHub CI/CD workflow (automatic deployment on push to main branch)
+2. Run the deployment script manually: `./deploy-to-supabase.sh`
 
 ## Can I connect a custom domain to my Lovable project?
 
@@ -71,3 +82,4 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
