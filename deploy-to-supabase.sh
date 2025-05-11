@@ -13,7 +13,7 @@ echo "Logging into Supabase..."
 echo $SUPABASE_SERVICE_KEY | supabase login
 
 echo "Linking to konverter-prod project..."
-supabase link --project-ref konverter-prod
+supabase link --project-ref ygtmdrsrlyteuuvzwqjv
 
 # Create the website bucket if it doesn't exist yet
 echo "Creating website bucket (if it doesn't exist)..."
