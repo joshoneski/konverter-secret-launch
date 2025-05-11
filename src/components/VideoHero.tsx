@@ -6,20 +6,18 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 export default function VideoHero() {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const playerRef = useRef<YT.Player | null>(null);
   const { ref: leftRef, getExitStyle: getLeftExitStyle, isScrolledPast } = useScrollAnimation();
   const { ref: rightRef, getExitStyle: getRightExitStyle } = useScrollAnimation();
   
   const scrollThreshold = 150; // Adjust this value to control when text exits
   
   const toggleVideo = () => {
-    if (iframeRef.current) {
-      const iframe = iframeRef.current;
-      const player = new YT.Player(iframe);
-      
+    if (playerRef.current) {
       if (videoPlaying) {
-        player.pauseVideo();
+        playerRef.current.pauseVideo();
       } else {
-        player.playVideo();
+        playerRef.current.playVideo();
       }
       
       setVideoPlaying(!videoPlaying);
@@ -36,7 +34,7 @@ export default function VideoHero() {
     // Initialize player when API is ready
     window.onYouTubeIframeAPIReady = () => {
       if (iframeRef.current) {
-        new YT.Player(iframeRef.current, {
+        playerRef.current = new YT.Player(iframeRef.current, {
           events: {
             onStateChange: (event) => {
               setVideoPlaying(event.data === YT.PlayerState.PLAYING);
@@ -45,6 +43,17 @@ export default function VideoHero() {
         });
       }
     };
+    
+    // Check if YouTube API is already loaded
+    if (window.YT && window.YT.Player && iframeRef.current) {
+      playerRef.current = new YT.Player(iframeRef.current, {
+        events: {
+          onStateChange: (event) => {
+            setVideoPlaying(event.data === YT.PlayerState.PLAYING);
+          }
+        }
+      });
+    }
     
     // Cleanup
     return () => {
@@ -55,10 +64,8 @@ export default function VideoHero() {
   useEffect(() => {
     // Play video automatically when scrolled past threshold
     if (isScrolledPast(scrollThreshold)) {
-      if (iframeRef.current && !videoPlaying) {
-        const iframe = iframeRef.current;
-        const player = new YT.Player(iframe);
-        player.playVideo();
+      if (playerRef.current && !videoPlaying) {
+        playerRef.current.playVideo();
       }
     }
   }, [isScrolledPast, scrollThreshold, videoPlaying]);
