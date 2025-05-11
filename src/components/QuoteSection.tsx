@@ -8,15 +8,15 @@ export default function QuoteSection() {
   
   const testimonials = [
     {
-      quote: ""Konverter booked 80 demos for us in days."",
+      quote: "Konverter booked 80 demos for us in days.",
       author: "early beta user"
     },
     {
-      quote: ""My sales skills used to be limited by time, now I can earn unlimited with Konverter."",
+      quote: "My sales skills used to be limited by time, now I can earn unlimited with Konverter.",
       author: "growth marketer"
     },
     {
-      quote: ""I tried to make my own AI flows but never finished, until Konverter made it simple."",
+      quote: "I tried to make my own AI flows but never finished, until Konverter made it simple.",
       author: "content creator"
     }
   ];
