@@ -6,8 +6,10 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 export default function VideoHero() {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { ref: leftRef, getParallaxStyle: getLeftStyle } = useScrollAnimation();
-  const { ref: rightRef, getParallaxStyle: getRightStyle } = useScrollAnimation();
+  const { ref: leftRef, getExitStyle: getLeftExitStyle, isScrolledPast } = useScrollAnimation();
+  const { ref: rightRef, getExitStyle: getRightExitStyle } = useScrollAnimation();
+  
+  const scrollThreshold = 150; // Adjust this value to control when text exits
   
   const toggleVideo = () => {
     if (videoRef.current) {
@@ -21,36 +23,18 @@ export default function VideoHero() {
   };
 
   useEffect(() => {
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (videoRef.current) {
-            videoRef.current.play();
-            setVideoPlaying(true);
-          }
-        } else {
-          if (videoRef.current) {
-            videoRef.current.pause();
-            setVideoPlaying(false);
-          }
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.5,
-    });
-
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
-    }
-
-    return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current);
+    // Play video automatically when scrolled past threshold
+    if (isScrolledPast(scrollThreshold)) {
+      if (videoRef.current && !videoPlaying) {
+        videoRef.current.play();
+        setVideoPlaying(true);
       }
-    };
-  }, []);
+    } else if (videoPlaying && videoRef.current) {
+      // Optionally pause when scrolling back up
+      // videoRef.current.pause();
+      // setVideoPlaying(false);
+    }
+  }, [isScrolledPast, scrollThreshold, videoPlaying]);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -78,8 +62,8 @@ export default function VideoHero() {
         {/* Left Side - Creators */}
         <div 
           ref={leftRef}
-          className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 parallax"
-          style={getLeftStyle(0.1)}
+          className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 will-change-transform"
+          style={getLeftExitStyle('left', scrollThreshold)}
         >
           <div className="text-center md:text-right">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white mb-2">
@@ -94,8 +78,8 @@ export default function VideoHero() {
         {/* Right Side - Deployers */}
         <div 
           ref={rightRef}
-          className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 parallax"
-          style={getRightStyle(0.15)}
+          className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 will-change-transform"
+          style={getRightExitStyle('right', scrollThreshold)}
         >
           <div className="text-center md:text-left">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white mb-2">

@@ -10,6 +10,9 @@ export default function Index() {
   useEffect(() => {
     // Update the page title
     document.title = "Konverter.ai | Built for closers & creators";
+    
+    // Ensure scroll to top when the page loads
+    window.scrollTo(0, 0);
   }, []);
 
   return (

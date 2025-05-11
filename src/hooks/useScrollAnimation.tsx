@@ -27,5 +27,28 @@ export function useScrollAnimation() {
     };
   };
 
-  return { ref, scrollY, getParallaxStyle };
+  // New function for text exit animations on scroll
+  const getExitStyle = (direction: 'left' | 'right', threshold: number = 100, maxDistance: number = 1000) => {
+    // Calculate how much to move based on scroll position
+    const scrollProgress = Math.min(1, scrollY / threshold);
+    const translateDistance = scrollProgress * maxDistance;
+    
+    // Calculate opacity based on scroll (fade out as it exits)
+    const opacity = Math.max(0, 1 - scrollProgress * 1.5);
+
+    return {
+      transform: direction === 'left' 
+        ? `translateX(-${translateDistance}px)` 
+        : `translateX(${translateDistance}px)`,
+      opacity: opacity,
+      transition: 'all 0.2s ease-out',
+    };
+  };
+
+  // Check if we've scrolled past the threshold
+  const isScrolledPast = (threshold: number = 100) => {
+    return scrollY > threshold;
+  };
+
+  return { ref, scrollY, getParallaxStyle, getExitStyle, isScrolledPast };
 }
