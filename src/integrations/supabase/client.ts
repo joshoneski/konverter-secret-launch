@@ -22,13 +22,6 @@ export const supabase = createClient<Database>(
       persistSession: true,
       detectSessionInUrl: true,
       flowType: 'pkce',
-      // Configure redirects for authentication flows
-      signUp: {
-        redirectTo: `${SITE_URL}/auth/callback`,
-      },
-      signIn: {
-        redirectTo: `${SITE_URL}/auth/callback`,
-      }
     },
   }
 );
