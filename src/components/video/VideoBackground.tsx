@@ -35,7 +35,7 @@ export default function VideoBackground({
       <iframe
         ref={iframeRef}
         className="min-h-full min-w-full object-cover w-full h-full"
-        src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&controls=0&showinfo=0&rel=0&autoplay=0&loop=1&playlist=${videoId}&mute=1`}
+        src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=${videoId}&mute=1`}
         title="YouTube video"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

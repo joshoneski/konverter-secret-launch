@@ -6,13 +6,15 @@ type UseYouTubePlayerProps = {
   autoScrollPlayback?: boolean;
   scrollThreshold?: number;
   isScrolledPast: (threshold: number) => boolean;
+  autoPlayOnLoad?: boolean;
 };
 
 export function useYouTubePlayer({
   videoId,
   autoScrollPlayback = true,
   scrollThreshold = 250,
-  isScrolledPast
+  isScrolledPast,
+  autoPlayOnLoad = false
 }: UseYouTubePlayerProps) {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [playerReady, setPlayerReady] = useState(false);
@@ -47,6 +49,10 @@ export function useYouTubePlayer({
               console.log("Player ready");
               if (isMounted) {
                 setPlayerReady(true);
+                if (autoPlayOnLoad) {
+                  event.target.playVideo();
+                  setVideoPlaying(true);
+                }
               }
             },
             onStateChange: (event) => {
@@ -78,6 +84,10 @@ export function useYouTubePlayer({
               console.log("Player ready (direct init)");
               if (isMounted) {
                 setPlayerReady(true);
+                if (autoPlayOnLoad) {
+                  event.target.playVideo();
+                  setVideoPlaying(true);
+                }
               }
             },
             onStateChange: (event) => {
@@ -99,7 +109,7 @@ export function useYouTubePlayer({
         playerRef.current = null;
       }
     };
-  }, []);
+  }, [autoPlayOnLoad]);
 
   useEffect(() => {
     // Only set up scroll-based playback when player is ready and if autoScrollPlayback is enabled

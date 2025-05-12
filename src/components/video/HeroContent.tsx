@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Play } from "lucide-react";
 import { useScrollAnimationContext } from "@/components/animation/ScrollAnimationProvider";
 
 interface HeroContentProps {
@@ -56,25 +55,6 @@ export default function HeroContent({
           </p>
         </div>
       </div>
-
-      {/* Play Button - Only show when header text is visible */}
-      {showPlayButton && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300">
-          <button
-            onClick={onToggleVideo}
-            className={`rounded-full p-4 bg-black/30 border-2 transition-all duration-300 ${
-              videoPlaying 
-                ? "border-white/70 hover:border-white" 
-                : "border-white animate-pulse-soft hover:border-white"
-            }`}
-          >
-            <Play
-              size={24}
-              className={`text-white transition-opacity ${videoPlaying ? "opacity-70" : "opacity-100"}`}
-            />
-          </button>
-        </div>
-      )}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useYouTubePlayer } from "@/hooks/useYouTubePlayer";
 import VideoBackground from "@/components/video/VideoBackground";
 import HeroContent from "@/components/video/HeroContent";
 import { ScrollAnimationProvider } from "@/components/animation/ScrollAnimationProvider";
+import { useScrollAnimationContext } from "@/components/animation/ScrollAnimationProvider";
 
 export default function VideoHero() {
   const scrollThreshold = 250;
@@ -30,17 +31,17 @@ function VideoHeroContent() {
   const { 
     iframeRef, 
     playerReady, 
-    videoPlaying, 
-    toggleVideo 
+    videoPlaying
   } = useYouTubePlayer({
     videoId,
     scrollThreshold,
-    isScrolledPast
+    isScrolledPast,
+    autoPlayOnLoad: true
   });
 
-  // Check if we should show the play button and apply the overlay
-  const showPlayButton = !isScrolledPast(scrollThreshold);
+  // Check if we should apply the overlay
   const isVideoFocused = isScrolledPast(scrollThreshold);
+  const showOverlay = !isScrolledPast(scrollThreshold);
 
   return (
     <>
@@ -49,18 +50,15 @@ function VideoHeroContent() {
         iframeRef={iframeRef}
         videoId={videoId}
         isVideoFocused={isVideoFocused}
-        showOverlay={showPlayButton}
+        showOverlay={showOverlay}
       />
 
       {/* Split Hero Content */}
       <HeroContent
-        showPlayButton={showPlayButton}
+        showPlayButton={false}
         videoPlaying={videoPlaying}
-        onToggleVideo={toggleVideo}
+        onToggleVideo={() => {}}
       />
     </>
   );
 }
-
-// Import at the top of the file
-import { useScrollAnimationContext } from "@/components/animation/ScrollAnimationProvider";
