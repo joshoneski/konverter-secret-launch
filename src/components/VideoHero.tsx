@@ -46,13 +46,7 @@ export default function VideoHero() {
   };
 
   useEffect(() => {
-    // Load YouTube API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-    
-    // Initialize player when API is ready
+    // Define YouTube API callback function first
     window.onYouTubeIframeAPIReady = () => {
       if (iframeRef.current) {
         playerRef.current = new YT.Player(iframeRef.current, {
@@ -64,6 +58,12 @@ export default function VideoHero() {
         });
       }
     };
+    
+    // Load YouTube API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
     
     // Check if YouTube API is already loaded
     if (window.YT && window.YT.Player && iframeRef.current) {
@@ -84,11 +84,28 @@ export default function VideoHero() {
 
   useEffect(() => {
     // Play video automatically when scrolled past threshold
-    if (isScrolledPast(scrollThreshold)) {
-      if (playerRef.current && !videoPlaying) {
-        playerRef.current.playVideo();
+    const handleScrollBasedPlayback = () => {
+      if (isScrolledPast(scrollThreshold)) {
+        if (playerRef.current && !videoPlaying) {
+          playerRef.current.playVideo();
+          setVideoPlaying(true);
+        }
+      } else {
+        if (playerRef.current && videoPlaying) {
+          playerRef.current.pauseVideo();
+          setVideoPlaying(false);
+        }
       }
-    }
+    };
+
+    // Initial check
+    handleScrollBasedPlayback();
+
+    // Add scroll listener for continuous checking
+    window.addEventListener("scroll", handleScrollBasedPlayback, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScrollBasedPlayback);
+    };
   }, [isScrolledPast, scrollThreshold, videoPlaying]);
 
   // Check if we should show the play button and apply the overlay
