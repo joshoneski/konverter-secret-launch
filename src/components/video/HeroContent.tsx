@@ -1,35 +1,35 @@
 
 import React from "react";
 import { Play } from "lucide-react";
+import { useScrollAnimationContext } from "@/components/animation/ScrollAnimationProvider";
 
 interface HeroContentProps {
   showPlayButton: boolean;
   videoPlaying: boolean;
   onToggleVideo: () => void;
-  getLeftExitStyle: (direction: 'left' | 'right', threshold: number, speedMultiplier: number) => React.CSSProperties;
-  getRightExitStyle: (direction: 'left' | 'right', threshold: number, speedMultiplier: number) => React.CSSProperties;
-  leftRef: React.RefObject<HTMLDivElement>;
-  rightRef: React.RefObject<HTMLDivElement>;
-  scrollThreshold: number;
 }
 
 export default function HeroContent({
   showPlayButton,
   videoPlaying,
   onToggleVideo,
-  getLeftExitStyle,
-  getRightExitStyle,
-  leftRef,
-  rightRef,
-  scrollThreshold
 }: HeroContentProps) {
+  // Get scroll animation values from context
+  const {
+    leftRef,
+    rightRef,
+    getLeftExitStyle,
+    getRightExitStyle,
+    scrollThreshold
+  } = useScrollAnimationContext();
+  
   return (
     <div className="relative h-full w-full flex flex-col md:flex-row">
       {/* Left Side - Creators */}
       <div 
         ref={leftRef}
         className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 will-change-transform"
-        style={getLeftExitStyle('left', scrollThreshold, 2)} // Increased exit speed
+        style={getLeftExitStyle('left', scrollThreshold, 2)}
       >
         <div className="text-center md:text-right">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white mb-2">
@@ -45,7 +45,7 @@ export default function HeroContent({
       <div 
         ref={rightRef}
         className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 will-change-transform"
-        style={getRightExitStyle('right', scrollThreshold, 2)} // Increased exit speed
+        style={getRightExitStyle('right', scrollThreshold, 2)}
       >
         <div className="text-center md:text-left">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white mb-2">
