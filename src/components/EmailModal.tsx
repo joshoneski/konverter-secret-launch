@@ -1,9 +1,8 @@
 
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -73,16 +72,7 @@ export default function EmailModal({ isOpen, onClose, userType }: EmailModalProp
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-md bg-black border border-gray-800 p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-white">{getTitle()}</h2>
-          <Button
-            variant="ghost"
-            className="text-gray-400 hover:text-white"
-            onClick={onClose}
-          >
-            <X size={18} />
-          </Button>
-        </div>
+        <DialogTitle className="text-xl font-bold text-white">{getTitle()}</DialogTitle>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
