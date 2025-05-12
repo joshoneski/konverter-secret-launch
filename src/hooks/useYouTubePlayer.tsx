@@ -11,10 +11,10 @@ type UseYouTubePlayerProps = {
 
 export function useYouTubePlayer({
   videoId,
-  autoScrollPlayback = true,
+  autoScrollPlayback = false,
   scrollThreshold = 250,
   isScrolledPast,
-  autoPlayOnLoad = false
+  autoPlayOnLoad = true
 }: UseYouTubePlayerProps) {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [playerReady, setPlayerReady] = useState(false);
@@ -111,42 +111,7 @@ export function useYouTubePlayer({
     };
   }, [autoPlayOnLoad]);
 
-  useEffect(() => {
-    // Only set up scroll-based playback when player is ready and if autoScrollPlayback is enabled
-    if (!playerReady || !autoScrollPlayback) return;
-    
-    // Play video automatically when scrolled past threshold
-    const handleScrollBasedPlayback = () => {
-      if (!playerRef.current || !playerReady) return;
-      
-      try {
-        if (isScrolledPast(scrollThreshold)) {
-          if (!videoPlaying) {
-            console.log("Auto-playing video due to scroll");
-            playerRef.current.playVideo();
-            setVideoPlaying(true);
-          }
-        } else {
-          if (videoPlaying) {
-            console.log("Auto-pausing video due to scroll");
-            playerRef.current.pauseVideo();
-            setVideoPlaying(false);
-          }
-        }
-      } catch (error) {
-        console.error("Error handling scroll-based playback:", error);
-      }
-    };
-
-    // Initial check
-    handleScrollBasedPlayback();
-
-    // Add scroll listener for continuous checking
-    window.addEventListener("scroll", handleScrollBasedPlayback, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScrollBasedPlayback);
-    };
-  }, [isScrolledPast, scrollThreshold, videoPlaying, playerReady, autoScrollPlayback]);
+  // We're not including the scroll-based effect anymore
 
   return {
     iframeRef,

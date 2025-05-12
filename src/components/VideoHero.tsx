@@ -36,7 +36,8 @@ function VideoHeroContent() {
     videoId,
     scrollThreshold,
     isScrolledPast,
-    autoPlayOnLoad: true
+    autoPlayOnLoad: true,
+    autoScrollPlayback: false // Disable scroll-based playback control
   });
 
   // Check if we should apply the overlay
