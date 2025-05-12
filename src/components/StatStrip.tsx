@@ -5,7 +5,7 @@ export default function StatStrip() {
   const { ref, getParallaxStyle } = useScrollAnimation();
   
   const stats = [
-    "2-click launch",
+    "3-click launch",
     "+76% conversions",
     "Earn while you sleep"
   ];
