@@ -5,6 +5,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export default function VideoHero() {
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [playerReady, setPlayerReady] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<YT.Player | null>(null);
   const { ref: leftRef, getExitStyle: getLeftExitStyle, isScrolledPast } = useScrollAnimation();
@@ -15,14 +16,16 @@ export default function VideoHero() {
   const scrollThreshold = 250; 
   
   const toggleVideo = () => {
-    if (playerRef.current) {
+    if (playerRef.current && playerReady) {
       if (videoPlaying) {
         playerRef.current.pauseVideo();
+        setVideoPlaying(false);
       } else {
         playerRef.current.playVideo();
+        setVideoPlaying(true);
       }
-      
-      setVideoPlaying(!videoPlaying);
+    } else {
+      console.log("Player not ready yet");
     }
   };
 
@@ -46,13 +49,25 @@ export default function VideoHero() {
   };
 
   useEffect(() => {
+    // Create a safety flag to handle component unmount
+    let isMounted = true;
+
     // Define YouTube API callback function first
     window.onYouTubeIframeAPIReady = () => {
-      if (iframeRef.current) {
+      console.log("YouTube API ready");
+      if (iframeRef.current && isMounted) {
         playerRef.current = new YT.Player(iframeRef.current, {
           events: {
+            onReady: (event) => {
+              console.log("Player ready");
+              if (isMounted) {
+                setPlayerReady(true);
+              }
+            },
             onStateChange: (event) => {
-              setVideoPlaying(event.data === YT.PlayerState.PLAYING);
+              if (isMounted) {
+                setVideoPlaying(event.data === YT.PlayerState.PLAYING);
+              }
             }
           }
         });
@@ -60,41 +75,71 @@ export default function VideoHero() {
     };
     
     // Load YouTube API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-    
-    // Check if YouTube API is already loaded
-    if (window.YT && window.YT.Player && iframeRef.current) {
-      playerRef.current = new YT.Player(iframeRef.current, {
-        events: {
-          onStateChange: (event) => {
-            setVideoPlaying(event.data === YT.PlayerState.PLAYING);
+    if (!window.YT) {
+      console.log("Loading YouTube API");
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      if (firstScriptTag && firstScriptTag.parentNode) {
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      }
+    } else {
+      console.log("YouTube API already loaded");
+      // If YouTube API is already loaded, initialize the player directly
+      if (iframeRef.current && isMounted) {
+        playerRef.current = new YT.Player(iframeRef.current, {
+          events: {
+            onReady: (event) => {
+              console.log("Player ready (direct init)");
+              if (isMounted) {
+                setPlayerReady(true);
+              }
+            },
+            onStateChange: (event) => {
+              if (isMounted) {
+                setVideoPlaying(event.data === YT.PlayerState.PLAYING);
+              }
+            }
           }
-        }
-      });
+        });
+      }
     }
     
     // Cleanup
     return () => {
+      isMounted = false;
       window.onYouTubeIframeAPIReady = null;
+      if (playerRef.current) {
+        // Clean up player if needed
+        playerRef.current = null;
+      }
     };
   }, []);
 
   useEffect(() => {
+    // Only set up scroll-based playback when player is ready
+    if (!playerReady) return;
+    
     // Play video automatically when scrolled past threshold
     const handleScrollBasedPlayback = () => {
-      if (isScrolledPast(scrollThreshold)) {
-        if (playerRef.current && !videoPlaying) {
-          playerRef.current.playVideo();
-          setVideoPlaying(true);
+      if (!playerRef.current || !playerReady) return;
+      
+      try {
+        if (isScrolledPast(scrollThreshold)) {
+          if (!videoPlaying) {
+            console.log("Auto-playing video due to scroll");
+            playerRef.current.playVideo();
+            setVideoPlaying(true);
+          }
+        } else {
+          if (videoPlaying) {
+            console.log("Auto-pausing video due to scroll");
+            playerRef.current.pauseVideo();
+            setVideoPlaying(false);
+          }
         }
-      } else {
-        if (playerRef.current && videoPlaying) {
-          playerRef.current.pauseVideo();
-          setVideoPlaying(false);
-        }
+      } catch (error) {
+        console.error("Error handling scroll-based playback:", error);
       }
     };
 
@@ -106,7 +151,7 @@ export default function VideoHero() {
     return () => {
       window.removeEventListener("scroll", handleScrollBasedPlayback);
     };
-  }, [isScrolledPast, scrollThreshold, videoPlaying]);
+  }, [isScrolledPast, scrollThreshold, videoPlaying, playerReady]);
 
   // Check if we should show the play button and apply the overlay
   const showPlayButton = !isScrolledPast(scrollThreshold);

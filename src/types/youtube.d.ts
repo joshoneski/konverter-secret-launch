@@ -21,6 +21,11 @@ declare namespace YT {
     BUFFERING = 3,
     CUED = 5
   }
+
+  interface PlayerEvent {
+    target: Player;
+    data: any;
+  }
 }
 
 interface Window {
