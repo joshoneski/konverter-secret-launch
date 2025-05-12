@@ -23,16 +23,16 @@ export default function EmailModal({ isOpen, onClose, userType }: EmailModalProp
     setIsSubmitting(true);
     
     try {
-      // Store the email and user type in Supabase storage
-      // This is using the public bucket to store the emails temporarily
-      // In a production app, you would use a proper database table
-      const { error } = await supabase.storage
-        .from('website')
-        .upload(`contacts/${userType}-${Date.now()}.json`, JSON.stringify({
-          email,
-          userType,
-          timestamp: new Date().toISOString()
-        }));
+      // Store the email and user type directly in a 'waitlist' table
+      const { error } = await supabase
+        .from('waitlist')
+        .insert([
+          { 
+            email,
+            user_type: userType,
+            created_at: new Date().toISOString()
+          }
+        ]);
       
       if (error) {
         console.error("Error storing contact:", error);
