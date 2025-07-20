@@ -1,6 +1,7 @@
 
 import React from "react";
 import { useScrollAnimationContext } from "@/components/animation/ScrollAnimationProvider";
+import CTAButtons from "@/components/CTAButtons";
 
 interface HeroContentProps {
   showPlayButton: boolean;
@@ -35,6 +36,9 @@ export default function HeroContent({
           </p>
         </div>
       </div>
+      
+      {/* CTA Buttons */}
+      <CTAButtons />
       
       {/* Split Content */}
       <div className="flex flex-col md:flex-row h-1/3">

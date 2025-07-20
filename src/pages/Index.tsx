@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import VideoHero from "@/components/VideoHero";
 import CapabilitiesSection from "@/components/CapabilitiesSection";
 import StatStrip from "@/components/StatStrip";
-import CtaBar from "@/components/CtaBar";
+import AboutSection from "@/components/AboutSection";
 import QuoteSection from "@/components/QuoteSection";
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
@@ -23,7 +23,7 @@ export default function Index() {
       <VideoHero />
       <CapabilitiesSection />
       <StatStrip />
-      <CtaBar />
+      <AboutSection />
       <QuoteSection />
       <Footer />
     </div>
