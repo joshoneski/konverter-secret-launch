@@ -52,7 +52,7 @@ export default function FloatingCTA() {
           {/* Main Toggle Button */}
           <Button
             onClick={toggleExpanded}
-            className={`w-20 h-16 rounded-2xl shadow-xl backdrop-blur-sm transition-all duration-500 bg-gradient-to-br from-primary via-primary/90 to-primary/80 hover:from-primary/90 hover:via-primary/80 hover:to-primary/70 hover:scale-105 border-2 border-primary/20 ${
+            className={`w-24 h-16 px-4 rounded-2xl shadow-xl backdrop-blur-sm transition-all duration-500 bg-gradient-to-br from-primary via-primary/90 to-primary/80 hover:from-primary/90 hover:via-primary/80 hover:to-primary/70 hover:scale-105 border-2 border-primary/20 ${
               expanded ? 'rotate-180' : 'rotate-0'
             }`}
             aria-label={expanded ? "Close action menu" : "Open action menu"}

@@ -42,28 +42,6 @@ export default function SocialProof() {
   return (
     <section className="py-20 bg-gradient-to-br from-gray-900 to-black text-white">
       <div className="container max-w-6xl mx-auto px-4">
-        {/* Stats Grid */}
-        <div className="grid md:grid-cols-4 gap-8 mb-16">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/10 flex items-center justify-center">
-                  <Icon className="w-8 h-8 text-blue-400" />
-                </div>
-                <div className="text-3xl md:text-4xl font-bold mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-lg font-semibold mb-1">
-                  {stat.label}
-                </div>
-                <p className="text-gray-400 text-sm">
-                  {stat.description}
-                </p>
-              </div>
-            );
-          })}
-        </div>
         
         {/* Features List */}
         <div className="max-w-4xl mx-auto">
