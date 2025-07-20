@@ -8,6 +8,7 @@ import StatStrip from "@/components/StatStrip";
 import AboutSection from "@/components/AboutSection";
 import QuoteSection from "@/components/QuoteSection";
 import Footer from "@/components/Footer";
+import FloatingCTA from "@/components/FloatingCTA";
 import { useEffect } from "react";
 
 export default function Index() {
@@ -30,6 +31,7 @@ export default function Index() {
       <AboutSection />
       <QuoteSection />
       <Footer />
+      <FloatingCTA />
     </div>
   );
 }

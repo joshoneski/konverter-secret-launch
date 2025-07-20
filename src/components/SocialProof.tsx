@@ -81,13 +81,6 @@ export default function SocialProof() {
           </div>
         </div>
         
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <h3 className="text-2xl md:text-3xl font-bold mb-6">
-            Ready to join them?
-          </h3>
-          <CTAButtons />
-        </div>
       </div>
     </section>
   );

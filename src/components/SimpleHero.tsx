@@ -26,8 +26,6 @@ export default function SimpleHero() {
           </p>
         </div>
         
-        {/* CTA Buttons */}
-        <CTAButtons />
         
         {/* Split Value Props */}
         <div className="grid md:grid-cols-2 gap-12 mt-20 max-w-4xl mx-auto">

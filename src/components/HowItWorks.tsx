@@ -74,13 +74,6 @@ export default function HowItWorks() {
           })}
         </div>
         
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <p className="text-lg text-gray-600 mb-6">
-            Ready to get started? Choose your path:
-          </p>
-          <CTAButtons />
-        </div>
       </div>
     </section>
   );
