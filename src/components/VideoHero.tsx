@@ -11,7 +11,7 @@ export default function VideoHero() {
   const heroRef = useRef<HTMLDivElement>(null);
   
   return (
-    <section ref={heroRef} className="relative h-screen w-full overflow-hidden">
+    <section ref={heroRef} className="relative h-screen w-full overflow-hidden pt-16">
       <ScrollAnimationProvider scrollThreshold={scrollThreshold}>
         <VideoHeroContent />
       </ScrollAnimationProvider>
