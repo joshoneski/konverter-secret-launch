@@ -21,9 +21,6 @@ export default function SimpleHero() {
           <p className="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-4xl mx-auto mb-4">
             The marketplace where top performers create agents, earn passive income, and users get guaranteed results.
           </p>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-            3-click launch • +76% conversions • Earn while you sleep
-          </p>
         </div>
         
         
