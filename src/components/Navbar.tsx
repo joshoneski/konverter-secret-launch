@@ -1,3 +1,4 @@
+
 export default function Navbar() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -18,6 +19,12 @@ export default function Navbar() {
         </div>
         
         <div className="hidden md:flex items-center space-x-8">
+          <button 
+            onClick={() => scrollToSection('how-it-works')}
+            className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
+          >
+            How It Works
+          </button>
           <button 
             onClick={() => scrollToSection('features')}
             className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
