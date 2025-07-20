@@ -1,5 +1,6 @@
 
 import VideoHero from "@/components/VideoHero";
+import CapabilitiesSection from "@/components/CapabilitiesSection";
 import StatStrip from "@/components/StatStrip";
 import CtaBar from "@/components/CtaBar";
 import QuoteSection from "@/components/QuoteSection";
@@ -25,6 +26,7 @@ export default function Index() {
         />
       </div>
       <VideoHero />
+      <CapabilitiesSection />
       <StatStrip />
       <CtaBar />
       <QuoteSection />

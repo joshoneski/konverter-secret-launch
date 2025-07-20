@@ -28,7 +28,7 @@ export default function HeroContent({
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="text-center max-w-4xl">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white mb-6">
-            Turn Any Expert Into a Scalable AI Agents
+            Turn Any Expert Into Scalable AI Agents
           </h1>
           <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
             The marketplace where top performers create agents, earn passive income, and users get guaranteed results.
