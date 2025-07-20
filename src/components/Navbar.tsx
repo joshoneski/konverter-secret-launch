@@ -37,12 +37,6 @@ export default function Navbar() {
           >
             About
           </button>
-          <button 
-            onClick={() => scrollToSection('cta-buttons')}
-            className="bg-black text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-800 transition-colors"
-          >
-            Get Started
-          </button>
         </div>
         
         <div className="md:hidden">

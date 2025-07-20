@@ -61,7 +61,7 @@ export default function FloatingCTA() {
             {expanded ? (
               <ChevronUp className="w-7 h-7" />
             ) : (
-              <Rocket className="w-7 h-7" />
+              <span className="text-sm font-semibold">Get Started</span>
             )}
           </Button>
         </div>
