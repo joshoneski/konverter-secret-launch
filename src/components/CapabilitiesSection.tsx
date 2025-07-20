@@ -39,6 +39,7 @@ export default function CapabilitiesSection() {
 
   return (
     <section 
+      id="features"
       ref={ref}
       className="py-20 w-full bg-black/50 backdrop-blur-sm"
       style={getParallaxStyle(0.03)}

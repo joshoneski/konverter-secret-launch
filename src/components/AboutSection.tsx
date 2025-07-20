@@ -1,6 +1,6 @@
 export default function AboutSection() {
   return (
-    <section className="py-20 bg-white text-black">
+    <section id="about" className="py-20 bg-white text-black">
       <div className="container max-w-4xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight">
@@ -11,9 +11,6 @@ export default function AboutSection() {
         
         <div className="prose prose-lg mx-auto max-w-none">
           <div className="text-lg md:text-xl leading-relaxed space-y-6 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
-            <p className="italic text-sm uppercase tracking-wider mb-8 text-gray-600">
-              (typeset like a 1964 magazine advert—wry, direct, a wink to the over‑worked reader)
-            </p>
             
             <p>
               You've met the modern office worker: eyes rimmed in blue‑light fatigue, tabs multiplying like rabbits, pipeline dashboards blinking "almost there." We were those workers - Josh juggling fundraising technology & campaigns that saved pennies on dollars, Mik tokenising characters at 3 a.m.—until we asked a forbidden question: <em>"Why can't the best closer in the room work for everyone at once?"</em>

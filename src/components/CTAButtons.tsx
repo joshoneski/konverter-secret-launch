@@ -11,7 +11,7 @@ export default function CTAButtons() {
   };
   
   return (
-    <>
+    <div id="cta-buttons">
       <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-8 py-8">
         <button
           onClick={() => openModal("creator")}
@@ -32,6 +32,6 @@ export default function CTAButtons() {
         onClose={() => setModalOpen(false)}
         userType={userType}
       />
-    </>
+    </div>
   );
 }
