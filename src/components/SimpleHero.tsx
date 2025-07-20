@@ -1,5 +1,6 @@
 
 import CTAButtons from "@/components/CTAButtons";
+import StatStrip from "@/components/StatStrip";
 
 export default function SimpleHero() {
   return (
@@ -23,9 +24,13 @@ export default function SimpleHero() {
           </p>
         </div>
         
+        {/* Stats Strip */}
+        <div className="mt-16 mb-20">
+          <StatStrip />
+        </div>
         
         {/* Split Value Props */}
-        <div className="grid md:grid-cols-2 gap-12 mt-20 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           <div className="text-center md:text-right">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Clone Your Secret Sauce

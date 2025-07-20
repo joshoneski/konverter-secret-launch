@@ -4,7 +4,6 @@ import SimpleHero from "@/components/SimpleHero";
 import HowItWorks from "@/components/HowItWorks";
 import CapabilitiesSection from "@/components/CapabilitiesSection";
 import SocialProof from "@/components/SocialProof";
-import StatStrip from "@/components/StatStrip";
 import AboutSection from "@/components/AboutSection";
 import QuoteSection from "@/components/QuoteSection";
 import Footer from "@/components/Footer";
@@ -27,7 +26,6 @@ export default function Index() {
       <HowItWorks />
       <CapabilitiesSection />
       <SocialProof />
-      <StatStrip />
       <AboutSection />
       <QuoteSection />
       <Footer />
