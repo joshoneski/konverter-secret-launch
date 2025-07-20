@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Rocket, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EmailModal from "./EmailModal";
 
@@ -27,13 +27,13 @@ export default function FloatingCTA() {
           <div className={`flex flex-col gap-2 transition-all duration-300 origin-bottom ${
             expanded 
               ? 'opacity-100 scale-100 translate-y-0' 
-              : 'opacity-0 scale-95 translate-y-2 pointer-events-none'
+              : 'opacity-0 scale-95 translate-y-4 pointer-events-none'
           }`}>
             <Button
               onClick={() => openModal("creator")}
               variant="default"
               size="default"
-              className="shadow-lg backdrop-blur-sm whitespace-nowrap min-w-[140px]"
+              className="shadow-xl backdrop-blur-sm whitespace-nowrap min-w-[140px] bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
               aria-label="Open creator signup"
             >
               I Want to Create
@@ -42,7 +42,7 @@ export default function FloatingCTA() {
               onClick={() => openModal("deployer")}
               variant="secondary"
               size="default"
-              className="shadow-lg backdrop-blur-sm whitespace-nowrap min-w-[140px]"
+              className="shadow-xl backdrop-blur-sm whitespace-nowrap min-w-[140px]"
               aria-label="Open deployer signup"
             >
               I Want to Deploy
@@ -52,14 +52,17 @@ export default function FloatingCTA() {
           {/* Main Toggle Button */}
           <Button
             onClick={toggleExpanded}
-            size="icon"
-            className={`w-14 h-14 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 ${
-              expanded ? 'rotate-45' : 'rotate-0'
+            className={`w-16 h-16 rounded-2xl shadow-xl backdrop-blur-sm transition-all duration-500 bg-gradient-to-br from-primary via-primary/90 to-primary/80 hover:from-primary/90 hover:via-primary/80 hover:to-primary/70 hover:scale-105 border-2 border-primary/20 ${
+              expanded ? 'rotate-180' : 'rotate-0'
             }`}
             aria-label={expanded ? "Close action menu" : "Open action menu"}
             aria-expanded={expanded}
           >
-            {expanded ? <X className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
+            {expanded ? (
+              <ChevronUp className="w-7 h-7" />
+            ) : (
+              <Rocket className="w-7 h-7" />
+            )}
           </Button>
         </div>
       </div>
