@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import SimpleHero from "@/components/SimpleHero";
 import HowItWorks from "@/components/HowItWorks";
 import CapabilitiesSection from "@/components/CapabilitiesSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
 import SocialProof from "@/components/SocialProof";
 import StatStrip from "@/components/StatStrip";
 import AboutSection from "@/components/AboutSection";
@@ -26,7 +25,6 @@ export default function Index() {
       <SimpleHero />
       <HowItWorks />
       <CapabilitiesSection />
-      <TestimonialsSection />
       <SocialProof />
       <StatStrip />
       <AboutSection />
