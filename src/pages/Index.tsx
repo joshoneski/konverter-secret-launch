@@ -1,6 +1,7 @@
 
 import VideoHero from "@/components/VideoHero";
 import StatStrip from "@/components/StatStrip";
+import InfoSection from "@/components/InfoSection";
 import CtaBar from "@/components/CtaBar";
 import QuoteSection from "@/components/QuoteSection";
 import Footer from "@/components/Footer";
@@ -17,14 +18,15 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
-      <div className="absolute top-4 left-4 z-50">
+      <div className="absolute top-4 left-4 z-50 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
         <img 
           src="/lovable-uploads/bb7889a0-522d-402d-b504-5b144fc3f9d4.png" 
           alt="Konverter.ai Logo" 
-          className="h-10 md:h-12"
+          className="h-8 md:h-10"
         />
       </div>
       <VideoHero />
+      <InfoSection />
       <StatStrip />
       <CtaBar />
       <QuoteSection />
