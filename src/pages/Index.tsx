@@ -1,7 +1,6 @@
 
 import VideoHero from "@/components/VideoHero";
 import StatStrip from "@/components/StatStrip";
-import InfoSection from "@/components/InfoSection";
 import CtaBar from "@/components/CtaBar";
 import QuoteSection from "@/components/QuoteSection";
 import Footer from "@/components/Footer";
@@ -26,7 +25,6 @@ export default function Index() {
         />
       </div>
       <VideoHero />
-      <InfoSection />
       <StatStrip />
       <CtaBar />
       <QuoteSection />
